@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE:ESG — 구매자 시작 안내</title>
+<meta name="description" content="RE:ESG 카드를 받으셨나요? 처음 열었을 때부터 7일 루틴까지, 단계별로 안내합니다.">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --e: #2D6A4F;
+  --e-light: #E8F4EE;
+  --e-mid: #B7D9C8;
+  --s: #1B4F72;
+  --s-light: #E8EEF6;
+  --s-mid: #96B8D4;
+  --g: #B7791F;
+  --g-light: #F6EFE4;
+  --g-mid: #E8C99A;
+  --bg: #FAF8F3;
+  --bg2: #F3F0EA;
+  --text: #231F1A;
+  --muted: #7A7568;
+  --border: #DDD8CE;
+  --white: #FFFFFF;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+a { color: var(--e); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ─── NAV ─── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(250,248,243,0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 8px; }
+.nav-dots { display: flex; gap: 4px; }
+.nav-dots span { width: 7px; height: 7px; border-radius: 50%; display: block; }
+.dot-e { background: var(--e); }
+.dot-s { background: var(--s); }
+.dot-g { background: var(--g); }
+.nav-brand {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.88rem; font-weight: 600; color: var(--text); letter-spacing: 0.02em;
+}
+.nav-sep { width: 1px; height: 14px; background: var(--border); margin: 0 4px; }
+.nav-tag {
+  font-size: 0.68rem; color: var(--muted);
+  background: var(--bg2); border: 1px solid var(--border);
+  padding: 3px 10px; border-radius: 100px; letter-spacing: 0.06em;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--text);
+  padding: 56px 40px 52px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 55% at 20% 110%, rgba(45,106,79,0.3) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(183,121,31,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: 920px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 40px; align-items: center;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 100px; padding: 5px 14px; margin-bottom: 18px;
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+.hero-h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 700; line-height: 1.35;
+  color: white; letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.hero-h1 em { font-style: normal; color: var(--e-mid); }
+.hero-desc {
+  font-size: 0.88rem; color: rgba(255,255,255,0.55);
+  line-height: 1.9; max-width: 480px; margin-bottom: 24px;
+}
+.hero-chips {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.hero-chip {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  padding: 4px 12px; border-radius: 100px;
+}
+.hc-e { background: rgba(183,217,200,0.14); color: var(--e-mid); border: 1px solid rgba(183,217,200,0.28); }
+.hc-s { background: rgba(150,184,212,0.14); color: var(--s-mid); border: 1px solid rgba(150,184,212,0.28); }
+.hc-g { background: rgba(232,201,154,0.14); color: var(--g-mid); border: 1px solid rgba(232,201,154,0.28); }
+
+/* Hero — card visual */
+.hero-card-stack {
+  display: flex; flex-direction: column; gap: 10px;
+  flex-shrink: 0;
+}
+.hero-card-mini {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px; padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px;
+  position: relative; overflow: hidden;
+  transition: background 0.18s;
+}
+.hero-card-mini::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+}
+.hcm-1::before { background: var(--e-mid); }
+.hcm-2::before { background: var(--s-mid); }
+.hcm-3::before { background: var(--g-mid); }
+.hcm-num {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.35); min-width: 32px;
+}
+.hcm-label { font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.75); }
+
+/* ─── LAYOUT ─── */
+.wrap { max-width: 920px; margin: 0 auto; padding: 0 32px; }
+
+.section { padding: 52px 0 44px; border-bottom: 1px solid var(--border); }
+.section:last-of-type { border-bottom: none; }
+
+.section-label {
+  font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::before {
+  content: ''; display: block; width: 20px; height: 1px; background: var(--muted);
+}
+.section-h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  font-weight: 700; line-height: 1.4; letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.section-h2 em { font-style: normal; color: var(--e); }
+.section-p {
+  font-size: 0.88rem; color: var(--muted); line-height: 1.85;
+  max-width: 560px; margin-bottom: 28px;
+}
+
+/* ─── STEP 01 · 카드 구성 확인 ─── */
+.unbox-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.unbox-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px 20px;
+  position: relative; overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.unbox-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+.unbox-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.ub-e { background: var(--e-light); border-color: var(--e-mid); }
+.ub-e::before { background: var(--e); }
+.ub-s { background: var(--s-light); border-color: var(--s-mid); }
+.ub-s::before { background: var(--s); }
+.ub-g { background: var(--g-light); border-color: var(--g-mid); }
+.ub-g::before { background: var(--g); }
+.ub-n { background: var(--bg2); border-color: var(--border); }
+.ub-n::before { background: var(--muted); }
+
+.unbox-tag {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 100px;
+  display: inline-block; margin-bottom: 10px;
+}
+.ub-e .unbox-tag { background: rgba(45,106,79,0.12); color: var(--e); }
+.ub-s .unbox-tag { background: rgba(27,79,114,0.12); color: var(--s); }
+.ub-g .unbox-tag { background: rgba(183,121,31,0.15); color: var(--g); }
+.ub-n .unbox-tag { background: var(--border); color: var(--muted); }
+
+.unbox-card h4 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.95rem; font-weight: 600; margin-bottom: 5px; color: var(--text);
+}
+.unbox-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.75; }
+
+.unbox-full {
+  margin-top: 12px; grid-column: 1 / -1;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.uf-icon { font-size: 1.4rem; flex-shrink: 0; }
+.uf-body h4 {
+  font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 3px;
+}
+.uf-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.65; }
+.uf-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.uf-chip {
+  font-size: 0.68rem; padding: 2px 8px; border-radius: 100px;
+  background: var(--bg2); color: var(--muted); border: 1px solid var(--border);
+}
+
+/* ─── STEP 02 · 오늘 바로 해보기 ─── */
+.first-flow {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--border); margin-bottom: 20px;
+}
+.ff-step {
+  padding: 24px 22px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.ff-step:last-child { border-right: none; }
+.ff-step-e { background: var(--e-light); }
+.ff-step-s { background: var(--s-light); }
+.ff-step-g { background: var(--g-light); }
+.ff-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.6rem; font-weight: 700; opacity: 0.18;
+  line-height: 1; margin-bottom: 10px;
+}
+.ff-step-e .ff-num { color: var(--e); }
+.ff-step-s .ff-num { color: var(--s); }
+.ff-step-g .ff-num { color: var(--g); }
+.ff-tag {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 100px;
+  display: inline-block; margin-bottom: 8px;
+}
+.ff-step-e .ff-tag { background: rgba(45,106,79,0.12); color: var(--e); }
+.ff-step-s .ff-tag { background: rgba(27,79,114,0.12); color: var(--s); }
+.ff-step-g .ff-tag { background: rgba(183,121,31,0.15); color: var(--g); }
+.ff-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.92rem; font-weight: 600; margin-bottom: 6px; color: var(--text);
+}
+.ff-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.75; }
+
+.card-tip {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 20px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.card-tip-icon { font-size: 1.3rem; flex-shrink: 0; }
+.card-tip-body h4 { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.card-tip-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.75; }
+
+/* ─── STEP 03 · 7일 루틴 ─── */
+.routine-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.routine-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.routine-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.07); }
+
+.rc-head {
+  padding: 18px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.rc-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.rc-e .rc-icon { background: var(--e-light); }
+.rc-g .rc-icon { background: var(--g-light); }
+.rc-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 3px;
+}
+.rc-sub { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+.rc-body { padding: 16px 20px; }
+.rc-items { display: grid; gap: 8px; }
+.rc-item {
+  display: flex; gap: 8px; align-items: flex-start;
+  font-size: 0.82rem; color: var(--muted); line-height: 1.65;
+}
+.rc-item::before { content: '✓'; flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+.rc-e .rc-item::before { color: var(--e); }
+.rc-g .rc-item::before { color: var(--g); }
+.rc-foot {
+  padding: 12px 20px; border-top: 1px solid var(--border);
+  background: var(--bg2);
+}
+.rc-link {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 5px;
+}
+.rc-e .rc-link { color: var(--e); }
+.rc-g .rc-link { color: var(--g); }
+
+.routine-note {
+  margin-top: 12px; padding: 14px 18px;
+  background: var(--g-light); border-left: 3px solid var(--g-mid);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.82rem; color: var(--muted); line-height: 1.85;
+}
+.routine-note strong { color: var(--g); }
+
+/* ─── STEP 04 · 더 깊게 쓰기 ─── */
+.depth-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.depth-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 18px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.18s, transform 0.18s;
+}
+.depth-card:hover { border-color: var(--e-mid); transform: translateY(-2px); }
+.depth-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--e-mid);
+}
+.depth-badge {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 100px;
+  display: inline-block; margin-bottom: 10px;
+}
+.db-open { background: var(--e-light); color: var(--e); }
+.db-paid { background: var(--s-light); color: var(--s); }
+.db-inst { background: var(--g-light); color: var(--g); }
+
+.depth-card h4 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.92rem; font-weight: 600; margin-bottom: 5px; color: var(--text);
+}
+.depth-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.75; margin-bottom: 12px; }
+.depth-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.75rem; font-weight: 600;
+  padding: 6px 14px; border-radius: 100px;
+  transition: all 0.18s;
+}
+.dl-e { background: var(--e-light); color: var(--e); border: 1px solid var(--e-mid); }
+.dl-e:hover { background: var(--e); color: white; }
+.dl-s { background: var(--s-light); color: var(--s); border: 1px solid var(--s-mid); }
+.dl-s:hover { background: var(--s); color: white; }
+.dl-g { background: var(--g-light); color: var(--g); border: 1px solid var(--g-mid); }
+.dl-g:hover { background: var(--g); color: white; }
+
+/* ─── STEP 05 · 함께 나누기 ─── */
+.community-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.community-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px 20px;
+  display: flex; gap: 14px; align-items: flex-start;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.18s, transform 0.18s;
+}
+.community-card:hover { border-color: var(--e-mid); transform: translateX(3px); text-decoration: none; }
+.cc-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.cci-e { background: var(--e-light); }
+.cci-s { background: var(--s-light); }
+.cci-g { background: var(--g-light); }
+.cc-body h4 { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.cc-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+
+/* ─── STEP 06 · 기관에서 쓰려면 ─── */
+.inst-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 16px;
+}
+.inst-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px 20px;
+}
+.inst-card h4 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; color: var(--text);
+}
+.inst-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.8; margin-bottom: 12px; }
+.inst-link {
+  font-size: 0.75rem; font-weight: 600; color: var(--s);
+  display: inline-flex; align-items: center; gap: 5px;
+  border-bottom: 1px solid var(--s-mid); padding-bottom: 2px;
+}
+.inst-link:hover { color: var(--text); }
+
+/* ─── CTA ─── */
+.cta-section { padding: 52px 0; }
+.cta-box {
+  background: var(--text); border-radius: 16px;
+  padding: 44px 48px; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 32px; align-items: center;
+}
+.cta-box::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 0% 100%, rgba(45,106,79,0.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cta-inner { position: relative; z-index: 2; }
+.cta-pills { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.cta-pill {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+  padding: 4px 11px; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.55);
+}
+.cta-h3 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 8px; line-height: 1.45;
+}
+.cta-p { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.85; }
+.cta-side { position: relative; z-index: 2; flex-shrink: 0; }
+.cta-email-wrap { display: flex; gap: 8px; }
+.cta-email-inp {
+  padding: 11px 16px; border-radius: 100px;
+  border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.07);
+  font-size: 0.82rem; color: white; outline: none; min-width: 200px;
+  font-family: 'Noto Sans KR', sans-serif; transition: border-color 0.18s;
+}
+.cta-email-inp::placeholder { color: rgba(255,255,255,0.35); }
+.cta-email-inp:focus { border-color: rgba(255,255,255,0.5); }
+.cta-submit {
+  background: var(--e); border: none; color: white;
+  padding: 11px 22px; border-radius: 100px;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: background 0.2s; white-space: nowrap;
+}
+.cta-submit:hover { background: #1e4e38; }
+.cta-note { font-size: 0.68rem; color: rgba(255,255,255,0.3); margin-top: 8px; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: #1A1714; padding: 32px 28px; text-align: center;
+}
+.footer-inner { max-width: 920px; margin: 0 auto; }
+.footer-logo { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+.footer-brand { font-family: 'Noto Serif KR', serif; font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.65); }
+.footer-tagline { font-size: 0.7rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; margin-bottom: 14px; }
+.footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.footer-links a { font-size: 0.72rem; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
+.footer-copy { font-size: 0.68rem; color: rgba(255,255,255,0.2); }
+
+/* ─── FADE IN ─── */
+.fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.fade-in.visible { opacity: 1; transform: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 860px) {
+  .cta-box { grid-template-columns: 1fr; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-card-stack { display: none; }
+}
+@media (max-width: 680px) {
+  .hero { padding: 44px 24px 40px; }
+  .wrap { padding: 0 20px; }
+  .unbox-grid { grid-template-columns: 1fr 1fr; }
+  .first-flow { grid-template-columns: 1fr; border-radius: 12px; }
+  .ff-step { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .ff-step:last-child { border-bottom: none; }
+  .routine-row { grid-template-columns: 1fr; }
+  .depth-grid { grid-template-columns: 1fr 1fr; }
+  .community-grid { grid-template-columns: 1fr; }
+  .inst-row { grid-template-columns: 1fr; }
+  .cta-box { padding: 32px 24px; }
+  .cta-email-wrap { flex-direction: column; }
+  nav { padding: 0 16px; }
+}
+@media (max-width: 400px) {
+  .unbox-grid { grid-template-columns: 1fr; }
+  .depth-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-dots">
+      <span class="dot-e"></span>
+      <span class="dot-s"></span>
+      <span class="dot-g"></span>
+    </div>
+    <span class="nav-brand">RE:ESG</span>
+    <span class="nav-sep"></span>
+    <span class="nav-tag">구매자 시작 안내</span>
+  </div>
+  <a href="mailto:amadolab.official@gmail.com"
+     style="font-size:0.72rem; color:var(--e); letter-spacing:0.04em;">문의하기</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">
+        <div class="nav-dots" style="gap:2px;">
+          <span class="dot-e" style="width:5px;height:5px;"></span>
+          <span class="dot-s" style="width:5px;height:5px;"></span>
+          <span class="dot-g" style="width:5px;height:5px;"></span>
+        </div>
+        RE:ESG 구매자 전용 시작 안내
+      </div>
+      <h1 class="hero-h1">
+        카드가 도착했나요?<br>
+        <em>처음부터 함께</em> 시작합니다
+      </h1>
+      <p class="hero-desc">
+        이 페이지는 RE:ESG 카드를 받으신 분을 위한 안내입니다.
+        처음 열었을 때부터 7일 루틴, 깊은 활용법, 커뮤니티 연결까지
+        단계별로 안내합니다.
+      </p>
+      <div class="hero-chips">
+        <span class="hero-chip hc-e">처음 열었을 때</span>
+        <span class="hero-chip hc-s">7일 루틴</span>
+        <span class="hero-chip hc-g">더 깊게 쓰기</span>
+      </div>
+    </div>
+
+    <div class="hero-card-stack">
+      <div class="hero-card-mini hcm-1">
+        <span class="hcm-num">STEP 01</span>
+        <span class="hcm-label">카드 구성 확인</span>
+      </div>
+      <div class="hero-card-mini hcm-2">
+        <span class="hcm-num">STEP 02</span>
+        <span class="hcm-label">오늘 바로 해보기</span>
+      </div>
+      <div class="hero-card-mini hcm-3">
+        <span class="hcm-num">STEP 03</span>
+        <span class="hcm-label">7일 루틴 시작</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="wrap">
+
+  <!-- ──────────── STEP 01 · 처음 열었을 때 ──────────── -->
+  <div class="section fade-in" id="step01">
+    <div class="section-label">Step 01 · 처음 열었을 때</div>
+    <h2 class="section-h2">먼저 <em>카드 구성을 확인</em>해보세요</h2>
+    <p class="section-p">
+      박스를 열면 카드, 가이드북, 가이드 카드가 함께 들어 있습니다.
+      아래 구성을 확인하고, 빠진 것이 있다면 알려주세요.
+    </p>
+
+    <div class="unbox-grid">
+      <div class="unbox-card ub-e">
+        <span class="unbox-tag">E · Emotion</span>
+        <h4>감정 인식 카드 24장</h4>
+        <p>E-01~24번 카드. 지금 내 안에 무엇이 있는지 인식하는 단계입니다.</p>
+      </div>
+      <div class="unbox-card ub-s">
+        <span class="unbox-tag">S · Self</span>
+        <h4>자기 이해 카드 24장</h4>
+        <p>S-01~24번 카드. 감정 아래에 있는 욕구와 가치를 탐색합니다.</p>
+      </div>
+      <div class="unbox-card ub-g">
+        <span class="unbox-tag">G · Ground</span>
+        <h4>뿌리내림 카드 24장</h4>
+        <p>G-01~24번 카드. 작은 실천으로 삶에 닻을 내리는 단계입니다.</p>
+      </div>
+      <div class="unbox-card ub-n">
+        <span class="unbox-tag">Expansion</span>
+        <h4>확장 카드 16장</h4>
+        <p>E/S/G 확장팩 각 일부. 기본 72장에 익숙해진 후에 꺼내보세요.</p>
+      </div>
+      <div class="unbox-card ub-n">
+        <span class="unbox-tag">Guide 00</span>
+        <h4>가이드 카드 00번</h4>
+        <p>처음 시작하는 분을 위한 카드 사용법 요약 가이드입니다.</p>
+      </div>
+      <div class="unbox-card ub-n">
+        <span class="unbox-tag">Guide 89</span>
+        <h4>확장팩 사용 안내 카드</h4>
+        <p>확장 카드 도입 시기와 안전 사용을 위한 체크리스트가 담겨 있습니다.</p>
+      </div>
+
+      <div class="unbox-full">
+        <span class="uf-icon">📖</span>
+        <div class="uf-body">
+          <h4>통합 가이드북 v3.1 (4권 구성)</h4>
+          <p>카드 철학·구조·사용법·활용 가이드·안전 사용·FAQ까지 포함된 전체 안내서입니다. 처음엔 1권부터 천천히 읽어보세요.</p>
+          <div class="uf-chips">
+            <span class="uf-chip">제1권 철학</span>
+            <span class="uf-chip">제2권 사용법</span>
+            <span class="uf-chip">제3권 활용</span>
+            <span class="uf-chip">제4권 운영</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────── STEP 02 · 오늘 바로 해보기 ──────────── -->
+  <div class="section fade-in" id="step02">
+    <div class="section-label">Step 02 · 오늘 바로 해보기</div>
+    <h2 class="section-h2">카드 한 장으로<br><em>바로 시작할 수 있습니다</em></h2>
+    <p class="section-p">
+      가이드북을 다 읽지 않아도 됩니다. 지금 이 세 단계만으로 첫 번째 리추얼을 시작할 수 있어요.
+    </p>
+
+    <div class="first-flow">
+      <div class="ff-step ff-step-e">
+        <div class="ff-num">01</div>
+        <div class="ff-tag">E — 감정 인식</div>
+        <div class="ff-title">카드를 펼쳐놓고 하나를 고릅니다</div>
+        <div class="ff-desc">이유를 몰라도 괜찮습니다. 지금 가장 눈에 들어오는, 끌리는 카드를 고르세요. 정답은 없습니다.</div>
+      </div>
+      <div class="ff-step ff-step-s">
+        <div class="ff-num">02</div>
+        <div class="ff-tag">S — 자기 이해</div>
+        <div class="ff-title">카드의 내면 대화를 읽습니다</div>
+        <div class="ff-desc">카드의 '이 감정이 말하는 것' 문장을 천천히 읽어보세요. 내 이야기처럼 들리는 문장에 멈춰봅니다.</div>
+      </div>
+      <div class="ff-step ff-step-g">
+        <div class="ff-num">03</div>
+        <div class="ff-tag">G — 뿌리내림</div>
+        <div class="ff-title">작은 실천 하나를 정합니다</div>
+        <div class="ff-desc">카드의 돌봄 제안을 읽고, 오늘 할 수 있는 가장 작은 것 하나를 정해보세요. 물 한 잔도 충분합니다.</div>
+      </div>
+    </div>
+
+    <div class="card-tip">
+      <span class="card-tip-icon">💡</span>
+      <div class="card-tip-body">
+        <h4>처음 카드를 고르는 것이 어렵다면</h4>
+        <p>카드를 뒤집어 바닥에 골고루 펼쳐두고, 손이 가는 카드를 자연스럽게 집어보세요.
+        또는 오늘 날씨, 오늘 기분과 가장 닮은 자연 이미지를 찾는 방법도 좋습니다.
+        RE:ESG 감정 유형 테스트를 먼저 해보는 것도 출발점이 됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────── STEP 03 · 7일 루틴 ──────────── -->
+  <div class="section fade-in" id="step03">
+    <div class="section-label">Step 03 · 7일 루틴</div>
+    <h2 class="section-h2">7일 동안<br><em>감정 여정을 이어가세요</em></h2>
+    <p class="section-p">
+      하루 5~10분, 카드와 워크북을 함께 쓰는 것만으로 충분합니다.
+      7일 워크북과 실천 트래커 중 편한 것을 골라 시작하세요.
+    </p>
+
+    <div class="routine-row">
+      <div class="routine-card rc-e">
+        <div class="rc-head">
+          <div class="rc-icon">📓</div>
+          <div>
+            <div class="rc-title">7일 감정 워크북</div>
+            <div class="rc-sub">매일 테마별 기록 · Day 1~7 + Week 1 정리</div>
+          </div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-items">
+            <div class="rc-item">감정 온도 체크 → 카드 뽑기 → 저널링 → 감사 3가지</div>
+            <div class="rc-item">E·S·G 주제가 매일 다르게 연결됩니다</div>
+            <div class="rc-item">Day 7 이후 Week 1 정리로 패턴을 발견합니다</div>
+            <div class="rc-item">소요시간: 하루 약 10~15분</div>
+          </div>
+        </div>
+        <div class="rc-foot">
+          <a class="rc-link" href="re_esg_workbook_welcome_v2.html">
+            7일 워크북 시작하기 →
+          </a>
+        </div>
+      </div>
+
+      <div class="routine-card rc-g">
+        <div class="rc-head">
+          <div class="rc-icon">📊</div>
+          <div>
+            <div class="rc-title">7일 · 30일 실천 트래커</div>
+            <div class="rc-sub">기록 도구 · 오픈채팅 챌린지 연계</div>
+          </div>
+        </div>
+        <div class="rc-body">
+          <div class="rc-items">
+            <div class="rc-item">매일 카드 + 한 줄 기록으로 간단하게 시작</div>
+            <div class="rc-item">7일 또는 30일 단위로 실천을 트래킹합니다</div>
+            <div class="rc-item">완료 후 캡처하여 오픈채팅에 나눌 수 있습니다</div>
+            <div class="rc-item">소요시간: 하루 약 3~5분</div>
+          </div>
+        </div>
+        <div class="rc-foot">
+          <a class="rc-link" href="https://meeyann.github.io/tracker">
+            트래커 바로가기 →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="routine-note">
+      <strong>둘 다 할 필요는 없습니다.</strong>
+      워크북은 매일 주제별로 깊게 탐색하고 싶은 분에게,
+      트래커는 간단히 기록하고 지속성을 확인하고 싶은 분에게 잘 맞습니다.
+      지금의 나에게 더 가벼운 것을 선택하세요.
+    </div>
+  </div>
+
+  <!-- ──────────── STEP 04 · 더 깊게 쓰기 ──────────── -->
+  <div class="section fade-in" id="step04">
+    <div class="section-label">Step 04 · 더 깊게 쓰기</div>
+    <h2 class="section-h2">준비가 되면<br><em>더 깊이 탐색합니다</em></h2>
+    <p class="section-p">
+      7일 루틴에 익숙해졌다면, 아래 자료로 RE:ESG를 더 풍부하게 활용할 수 있습니다.
+    </p>
+
+    <div class="depth-grid">
+      <div class="depth-card">
+        <span class="depth-badge db-paid">구매자 전용</span>
+        <h4>통합 가이드북 전체</h4>
+        <p>88장 카드 구조, 철학, 실전 활용, 안전 사용 체계까지 포함된 전체 안내서. PART 1~6 구성.</p>
+        <a class="depth-link dl-e" href="RE_ESG_guide_v2.html">가이드북 열기 →</a>
+      </div>
+      <div class="depth-card">
+        <span class="depth-badge db-open">무료 공개</span>
+        <h4>QR 리추얼 카드</h4>
+        <p>카드 뒷면 QR로 연결되는 오디오 가이드·저널링 질문·체크인 리추얼 샘플. 12장 구성.</p>
+        <a class="depth-link dl-s" href="https://meeyann.github.io/re-esg-test/re_esg_qr_ritual_cards_v2_final_links">리추얼 카드 열기 →</a>
+      </div>
+      <div class="depth-card">
+        <span class="depth-badge db-open">무료 공개</span>
+        <h4>감정 유형 테스트</h4>
+        <p>12문항으로 8가지 유형 중 나의 감정 생태 유형을 확인하고 추천 카드를 받습니다.</p>
+        <a class="depth-link dl-e" href="RE_ESG_emotion_type_test_v6.html">유형 테스트 하기 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────── STEP 05 · 함께 나누기 ──────────── -->
+  <div class="section fade-in" id="step05">
+    <div class="section-label">Step 05 · 함께 나누기</div>
+    <h2 class="section-h2">혼자가 아니라<br><em>같이 걷는 감정 생태계</em></h2>
+    <p class="section-p">
+      카드를 쓰다 생긴 질문, 오늘 고른 카드 이야기, 작은 발견들을 혼자 간직하지 않아도 됩니다.
+    </p>
+
+    <div class="community-grid">
+      <a class="community-card" href="https://open.kakao.com/me/REESG" target="_blank" rel="noopener">
+        <div class="cc-icon cci-g">💬</div>
+        <div class="cc-body">
+          <h4>카카오 오픈채팅 — 감정 생태 나누기</h4>
+          <p>오늘 뽑은 카드를 공유하거나, 사용 중 궁금한 점을 물어보세요. 챌린지 완료 인증도 여기서 합니다.</p>
+        </div>
+      </a>
+      <a class="community-card" href="https://brunch.co.kr/@eve133" target="_blank" rel="noopener">
+        <div class="cc-icon cci-e">📖</div>
+        <div class="cc-body">
+          <h4>브런치 — 미양의 감정생태 이야기</h4>
+          <p>RE:ESG 철학과 감정 생태를 글로 만날 수 있는 공간입니다. 카드와 함께 읽으면 더 깊어집니다.</p>
+        </div>
+      </a>
+      <a class="community-card" href="mailto:amadolab.official@gmail.com">
+        <div class="cc-icon cci-s">📧</div>
+        <div class="cc-body">
+          <h4>이메일 문의</h4>
+          <p>분실·불량·배송 문의, 기관 도입 문의, 기타 궁금한 점은 언제든 이메일로 연락해주세요.</p>
+        </div>
+      </a>
+      <a class="community-card" href="https://class101.net/ko/products/689da1436a835ce434f75c11" target="_blank" rel="noopener">
+        <div class="cc-icon cci-g">🎓</div>
+        <div class="cc-body">
+          <h4>Class101 온라인 강의</h4>
+          <p>아이패드를 활용하여 환경감수성을 키우는 과정</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ──────────── STEP 06 · 기관에서 쓰려면 ──────────── -->
+  <div class="section fade-in" id="step06">
+    <div class="section-label">Step 06 · 기관에서 쓰려면</div>
+    <h2 class="section-h2">직장·학교·기관에서<br><em>프로그램으로 활용하려면</em></h2>
+    <p class="section-p">
+      개인 사용을 넘어 그룹 워크숍, 상담·복지·교육 현장에서 활용하고 싶다면
+      기관용 허브에서 안내를 확인하세요.
+    </p>
+
+    <div class="inst-row">
+      <div class="inst-card">
+        <h4>🏢 기관·기업 프로그램 문의</h4>
+        <p>복지관, 교육재단, 청소년센터, 기업 EAP 등 기관 도입을 위한 파일럿 운영 상담, 제안서 요청을 받고 있습니다.</p>
+        <a class="inst-link" href="https://meeyann.github.io/hub">기관용 허브 바로가기 →</a>
+      </div>
+      <div class="inst-card">
+        <h4>📋 퍼실리테이터 운영 안내</h4>
+        <p>1회기~8회기 표준 운영안, 체크인 도구, 감정 유형 테스트, QR 리추얼 카드를 함께 사용할 수 있습니다.</p>
+        <a class="inst-link" href="workbook_v2.html">워크북 허브 보기 →</a>
+      </div>
+    </div>
+
+    <div style="padding:16px 20px; background:var(--s-light); border-radius:10px; border-left:3px solid var(--s); font-size:0.82rem; color:var(--muted); line-height:1.85;">
+      단체 구매(10세트 이상), 기관 협력 제안서, 퍼실리테이터 양성 과정 관련 문의는
+      <a href="mailto:amadolab.official@gmail.com" style="color:var(--s);">amadolab.official@gmail.com</a>으로 연락해주세요.
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section fade-in">
+    <div class="cta-box">
+      <div class="cta-inner">
+        <div class="cta-pills">
+          <span class="cta-pill">Emotion</span>
+          <span class="cta-pill">Self</span>
+          <span class="cta-pill">Ground</span>
+        </div>
+        <h3 class="cta-h3">
+          카드 1장 + 기록 1줄 +<br>
+          작은 실천 1개가 오늘의 리추얼입니다
+        </h3>
+        <p class="cta-p">
+          질문이 생기면 언제든 연락 주세요.<br>
+          새 소식과 워크북 업데이트 알림을 받고 싶다면 이메일을 남겨두세요.
+        </p>
+      </div>
+      <div class="cta-side">
+        <div class="cta-email-wrap">
+          <input class="cta-email-inp" type="email" placeholder="이메일 주소">
+          <button class="cta-submit" onclick="submitEmail()">알림 신청</button>
+        </div>
+        <div class="cta-note">업데이트·커뮤니티 소식 수신 · 언제든 해지 가능</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div class="nav-dots">
+        <span class="dot-e" style="width:6px;height:6px;"></span>
+        <span class="dot-s" style="width:6px;height:6px;"></span>
+        <span class="dot-g" style="width:6px;height:6px;"></span>
+      </div>
+      <span class="footer-brand">RE:ESG</span>
+    </div>
+    <div class="footer-tagline">Emotion · Self · Ground</div>
+    <div class="footer-links">
+      <a href="index_reesg_v7.html">홈페이지</a>
+      <a href="re_esg_guide_preview_v3.html">가이드북 미리보기</a>
+      <a href="RE_ESG_emotion_type_test_v6.html">감정 유형 테스트</a>
+      <a href="reesg_institution_qr_hub_v2.html">기관용 허브</a>
+      <a href="mailto:amadolab.official@gmail.com">이메일</a>
+    </div>
+    <div class="footer-copy">ⓒ 2026 Amado Lab (아마도랩) · amadolab.official@gmail.com</div>
+  </div>
+</footer>
+
+<script>
+// Fade-in observer
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.06, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+// Email submit
+function submitEmail() {
+  const inp = document.querySelector('.cta-email-inp');
+  const email = inp.value.trim();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!ok) { inp.style.borderColor = 'rgba(192,57,43,0.6)'; inp.focus(); return; }
+  inp.style.borderColor = '';
+  inp.value = '';
+  inp.placeholder = '신청되었습니다 ✓';
+  inp.disabled = true;
+  document.querySelector('.cta-submit').textContent = '완료';
+  document.querySelector('.cta-submit').disabled = true;
+}
+</script>
+</body>
+</html>
