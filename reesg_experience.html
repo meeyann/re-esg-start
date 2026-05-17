@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE:ESG — E·S·G 카드 직접 체험</title>
+<style>
+:root {
+  --bg:       #0A1A0C;
+  --bg-mid:   #112016;
+  --bg-light: #192B1C;
+  --border:   #1C3820;
+  --cream:    rgba(243,238,224,0.97);
+  --cream-f:  #F0EAD8;
+  --cream-d:  #E6DFCC;
+  --ink:      #1A2E1A;
+  --ink-mid:  #455444;
+  --ink-mute: #7A8A78;
+  --gold:     #C8B888;
+  --gold-d:   #A89868;
+  --e-color:  #EF9F27;
+  --e-bg:     #193A19; --e-fg: #7AB87A; --e-bd: #2A5A2A;
+  --e-light:  #FAEEDA; --e-text: #633806;
+  --s-color:  #378ADD;
+  --s-bg:     #182B3A; --s-fg: #7AAABB; --s-bd: #2A4A6A;
+  --s-light:  #E6F1FB; --s-text: #0C447C;
+  --g-color:  #D4537E;
+  --g-bg:     #3A1A2A; --g-fg: #C4829A; --g-bd: #6A2A4A;
+  --g-light:  #FBEAF0; --g-text: #72243E;
+  --shadow:   0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3);
+  --shadow-sm:0 3px 14px rgba(0,0,0,0.45);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Georgia','Batang',serif;
+  background:var(--bg);
+  min-height:100vh;
+  color:#E4DDD0;
+  -webkit-font-smoothing:antialiased;
+}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#253A25;border-radius:2px}
+
+/* ── Animations ── */
+@keyframes fadeUp   {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn   {from{opacity:0}to{opacity:1}}
+@keyframes float    {0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes breathe  {0%,100%{opacity:.5}50%{opacity:.9}}
+@keyframes glow     {0%,100%{box-shadow:0 0 12px rgba(200,184,136,0.15)}50%{box-shadow:0 0 32px rgba(200,184,136,0.4)}}
+@keyframes shimmer  {0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes flipIn   {0%{transform:perspective(700px) rotateY(90deg);opacity:0}100%{transform:perspective(700px) rotateY(0);opacity:1}}
+@keyframes sparkle  {0%{transform:scale(0) rotate(0deg);opacity:1}100%{transform:scale(2.5) rotate(90deg);opacity:0}}
+@keyframes celebrate{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-14px) scale(1.06)}60%{transform:translateY(-6px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse    {0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes dotPop   {0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+
+/* ── Layout ── */
+.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 18px 60px}
+.wrap{max-width:560px;width:100%}
+
+/* ── Typography ── */
+.brand-tag {font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#4A7A4A;margin-bottom:4px}
+.brand-name{font-size:30px;color:var(--gold);font-style:italic;letter-spacing:3px}
+.brand-sub {font-size:14px;color:#DDD6C0;margin-top:5px}
+
+/* ── Progress ── */
+.progress-track{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:28px;position:relative}
+.prog-step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+.prog-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;border:2px solid;transition:all .4s;position:relative}
+.prog-dot.idle   {background:#0E2210;border-color:#1E3A20;color:#3A5A3A}
+.prog-dot.active {border-color:var(--gold);color:var(--gold);box-shadow:0 0 16px rgba(200,184,136,0.35);animation:pulse 2s ease-in-out infinite}
+.prog-dot.done   {border-color:#4A7A4A;background:#2A5A2A;color:#9FD49F}
+.prog-dot.done::after{content:'✓';font-size:14px}
+.prog-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;transition:color .4s;white-space:nowrap}
+.prog-label.idle  {color:#2A4A2A}
+.prog-label.active{color:var(--gold)}
+.prog-label.done  {color:#4A7A4A}
+.prog-line{width:48px;height:2px;background:#1A3020;margin-bottom:22px;transition:background .5s;flex-shrink:0}
+.prog-line.done{background:#3A6A3A}
+
+/* ── Axis badge ── */
+.axis-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px}
+.axis-E{background:var(--e-bg);color:var(--e-fg);border:1px solid var(--e-bd)}
+.axis-S{background:var(--s-bg);color:var(--s-fg);border:1px solid var(--s-bd)}
+.axis-G{background:var(--g-bg);color:var(--g-fg);border:1px solid var(--g-bd)}
+
+/* ── Card Back (flip target) ── */
+.card-back-wrap{perspective:900px;margin-bottom:18px}
+.card-back{
+  background:linear-gradient(145deg,#0E2010,#162A18);
+  border-radius:16px;padding:36px 24px;
+  text-align:center;cursor:pointer;
+  border:1px solid #1E3A1E;
+  transition:all 0.2s;
+  animation:glow 3s ease-in-out infinite;
+}
+.card-back:hover{transform:translateY(-3px);filter:brightness(1.1)}
+.card-back-icon{font-size:40px;animation:float 4s ease-in-out infinite;margin-bottom:12px}
+.card-back-hint{font-size:13px;color:#5A8A5A;letter-spacing:1px}
+
+/* ── Revealed Card ── */
+.revealed-card{
+  background:var(--cream);
+  border-radius:16px;padding:0;
+  box-shadow:var(--shadow);
+  animation:flipIn 0.55s cubic-bezier(.22,.68,0,1.2) both;
+  overflow:hidden;
+  position:relative;
+  margin-bottom:18px;
+}
+.revealed-card::before{
+  content:'';position:absolute;top:0;left:-60%;
+  width:40%;height:100%;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,0.12) 50%,transparent 70%);
+  animation:shimmer 4s ease-in-out infinite;
+  background-size:200% 100%;pointer-events:none;
+}
+.rc-accent{height:5px;width:100%}
+.rc-body{padding:22px 24px;color:var(--ink)}
+.rc-nature-img{
+  width:100%;height:130px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:64px;
+  background:linear-gradient(135deg,#E8F5E9,#F1F8F1);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+.rc-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px}
+.rc-name{font-size:22px;font-weight:bold;color:var(--ink);margin-bottom:6px}
+.rc-desc{font-size:14px;color:var(--ink-mid);line-height:1.8;margin-bottom:14px}
+.rc-prompt{
+  background:#F1EDE0;border-radius:10px;
+  padding:14px 16px;font-size:14px;
+  color:var(--ink-mid);line-height:1.9;
+  font-style:italic;
+  border-left:3px solid var(--gold-d);
+}
+
+/* ── Emotion Picker ── */
+.emo-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.emo-btn{
+  background:#F5F0E4;border:2px solid transparent;
+  border-radius:12px;padding:13px 14px;
+  cursor:pointer;text-align:left;
+  font-family:inherit;transition:all .18s;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:var(--shadow-sm);
+}
+.emo-btn:hover:not(:disabled){filter:brightness(0.96);transform:translateX(2px)}
+.emo-btn.selected-E{border-color:#4A8A4A;background:#EAF5EA}
+.emo-btn.selected-S{border-color:#3A7AAA;background:#EAF0F5}
+.emo-btn.selected-G{border-color:#8A4A6A;background:#F5E8EE}
+.emo-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0}
+.emo-name{font-size:14px;font-weight:bold;color:var(--ink);flex:1}
+.emo-sub {font-size:11px;color:var(--ink-mute)}
+
+/* ── S-axis Question input ── */
+.q-inp{
+  display:block;width:100%;padding:13px 16px;
+  border-radius:10px;border:1px solid #B0A890;
+  background:#F8F4EC;font-family:inherit;
+  font-size:14px;color:var(--ink);line-height:1.8;
+  resize:vertical;min-height:110px;
+}
+.q-inp:focus{outline:none;border-color:#5A8A5A;box-shadow:0 0 0 2px rgba(74,122,74,0.15)}
+
+/* ── Practice Cards ── */
+.prac-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.prac-btn{
+  background:#F5F0E4;border:2px solid transparent;
+  border-radius:12px;padding:14px;
+  cursor:pointer;text-align:left;
+  font-family:inherit;transition:all .18s;
+  box-shadow:var(--shadow-sm);
+}
+.prac-btn:hover:not(:disabled){filter:brightness(0.96);transform:translateY(-2px)}
+.prac-btn.selected{border-color:#8A4A6A;background:#F5E8EE}
+.prac-icon{font-size:24px;margin-bottom:7px}
+.prac-name{font-size:13px;font-weight:bold;color:var(--ink);margin-bottom:3px}
+.prac-desc{font-size:11px;color:var(--ink-mute);line-height:1.6}
+
+/* ── Buttons ── */
+.btn{border:none;border-radius:10px;padding:12px 20px;font-size:14px;cursor:pointer;font-family:inherit;letter-spacing:.5px;transition:all .2s;font-weight:bold}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;filter:none!important}
+.btn-green {background:#3A6A3A;color:#fff}
+.btn-blue  {background:#3A5A7A;color:#fff}
+.btn-rose  {background:#7A3A5A;color:#fff}
+.btn-gold  {background:linear-gradient(135deg,#B8A060,#C8B880);color:#1A2A1A}
+.btn-ghost {background:rgba(255,255,255,0.06);color:#B8B0A0;border:1px solid #243824}
+.btn-block {width:100%;padding:14px;font-size:15px}
+
+/* ── Info / Quote boxes ── */
+.info-box {background:#EAE5D5;border-radius:9px;padding:13px 16px;font-size:13px;color:#5A6A50;line-height:1.85;margin-bottom:14px}
+.info-box strong{color:var(--ink)}
+.quote-box{background:#E8EEE8;border-radius:10px;padding:16px 20px;font-size:14px;color:#2A3A2A;line-height:2;font-style:italic;text-align:center}
+.warn-box {background:rgba(90,58,26,0.3);border:1px solid rgba(138,106,74,0.35);border-radius:8px;padding:12px 14px;font-size:12px;color:#C0A878;line-height:1.8}
+
+/* ── Step explain banner ── */
+.step-banner{
+  background:rgba(12,24,12,0.85);
+  border:1px solid var(--border);
+  border-radius:14px;padding:18px 20px;
+  margin-bottom:18px;
+  animation:slideRight .45s ease;
+}
+.step-banner-num{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#4A7A4A;margin-bottom:4px}
+.step-banner-title{font-size:18px;color:var(--gold);font-style:italic;margin-bottom:8px}
+.step-banner-desc{font-size:13px;color:#AAA098;line-height:1.85}
+
+/* ── Summary ── */
+.summary-block{background:var(--cream);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;animation:celebrate .7s ease}
+.summary-accent{height:4px}
+.summary-body{padding:20px 22px}
+.summary-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.summary-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.summary-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-mute);margin-bottom:3px}
+.summary-val{font-size:16px;font-weight:bold;color:var(--ink)}
+.summary-sub{font-size:12px;color:var(--ink-mid);margin-top:2px;line-height:1.7;font-style:italic}
+
+/* ── Home axis cards ── */
+.axis-intro-card{
+  background:rgba(12,24,12,0.8);border:1px solid;
+  border-radius:12px;padding:16px 18px;
+  margin-bottom:10px;cursor:default;
+  transition:all .2s;
+  animation:fadeUp .5s ease both;
+}
+.axis-intro-card:hover{transform:translateX(3px)}
+.aic-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.aic-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold}
+.aic-title{font-size:16px;font-weight:bold}
+.aic-desc{font-size:13px;color:#9A9A8A;line-height:1.8}
+
+/* ── How-to steps (home) ── */
+.howto-step{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #1A3020}
+.howto-step:last-child{border-bottom:none}
+.howto-num{width:28px;height:28px;border-radius:50%;background:#1E3A20;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:var(--gold);flex-shrink:0;margin-top:2px}
+.howto-text{font-size:13px;color:#AAA098;line-height:1.8}
+.howto-text strong{color:#DDD6C0}
+
+/* ── Utilities ── */
+.mb4{margin-bottom:4px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}
+.mb16{margin-bottom:16px}.mb20{margin-bottom:20px}.mb24{margin-bottom:24px}
+.mt4{margin-top:4px}.mt8{margin-top:8px}.mt12{margin-top:12px}
+.flex-b{display:flex;justify-content:space-between;align-items:center}
+.flex-c{display:flex;align-items:center}
+.gap8{gap:8px}.gap12{gap:12px}
+.text-center{text-align:center}
+.text-gold{color:var(--gold)}
+.text-mute{color:#6A7A6A}
+.italic{font-style:italic}
+.divider{height:1px;background:rgba(200,185,160,0.18);margin:16px 0}
+
+@media(max-width:420px){
+  .emo-grid,.prac-grid{grid-template-columns:1fr}
+  .brand-name{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════════ */
+
+const E_CARDS = [
+  {id:'e1', emoji:'🌧️', name:'무력감',    desc:'비가 내리듯 온몸이 무겁게 가라앉는 느낌',       prompt:'지금 이 무력감, 어디서부터 시작됐을까요?',    color:'#5A7AB0'},
+  {id:'e2', emoji:'🌱', name:'안도감',    desc:'겨우 한숨 돌린 듯, 땅에 발이 닿는 느낌',       prompt:'어떤 순간이 이 안도감을 만들었나요?',         color:'#5A9A5A'},
+  {id:'e3', emoji:'🌫️', name:'막막함',    desc:'안개 속에 서 있는 것처럼 앞이 보이지 않는 느낌', prompt:'지금 가장 불분명하게 느껴지는 것은 무엇인가요?',color:'#8A8AAA'},
+  {id:'e4', emoji:'🔥', name:'분노',      desc:'내 안에서 불꽃이 거세게 타오르는 느낌',         prompt:'이 불꽃은 무엇을 지키려고 하나요?',           color:'#CC5A3A'},
+  {id:'e5', emoji:'🍂', name:'서운함',    desc:'낙엽처럼 쓸쓸하게 떨어지는 마음',              prompt:'무엇을 기대했기에 서운했을까요?',             color:'#B07040'},
+  {id:'e6', emoji:'🌊', name:'불안감',    desc:'파도처럼 밀려오는 조마조마한 긴장',             prompt:'이 파도의 근원은 어디에 있을까요?',           color:'#3A80AA'},
+  {id:'e7', emoji:'☀️', name:'기쁨',      desc:'햇살처럼 가슴 속에서 환하게 퍼지는 느낌',       prompt:'이 기쁨을 온전히 느끼게 해준 것은 무엇인가요?',color:'#C8A830'},
+  {id:'e8', emoji:'🌑', name:'공허함',    desc:'달이 사라진 밤처럼 텅 빈 느낌',               prompt:'지금 무엇으로 채워지길 바라고 있나요?',        color:'#5A5A7A'},
+];
+
+const S_QUESTIONS = [
+  {id:'s1', emoji:'🌿', question:'이 감정이 나에게 말하는 것은 무엇일까요?',       hint:'감정 뒤에 숨은 나의 진짜 바람을 들어보세요'},
+  {id:'s2', emoji:'🪨', question:'이 감정은 내 어떤 가치관과 연결되어 있나요?',    hint:'내가 중요하게 여기는 것이 건드려졌을 수 있어요'},
+  {id:'s3', emoji:'🌊', question:'이 감정은 언제부터 시작됐을까요?',             hint:'오래된 패턴일 수도, 오늘의 사건일 수도 있어요'},
+  {id:'s4', emoji:'🌸', question:'지금 나에게 가장 필요한 것은 무엇인가요?',      hint:'쉬고 싶은지, 연결되고 싶은지, 인정받고 싶은지…'},
+  {id:'s5', emoji:'🦋', question:'이 감정 속에서 나는 어떤 사람이고 싶나요?',     hint:'지금의 나를 판단하지 말고 관찰해보세요'},
+];
+
+const G_CARDS = [
+  {id:'g1', emoji:'🌿', name:'잠시 멈추기',   desc:'5분간 창밖이나 식물을 바라보며 호흡 고르기',  color:'#3A7A5A'},
+  {id:'g2', emoji:'✍️', name:'감정 한 줄 쓰기',desc:'오늘의 감정을 단 한 문장으로 기록하기',       color:'#5A7AB0'},
+  {id:'g3', emoji:'🚶', name:'짧은 산책',      desc:'10분이라도 밖을 걸으며 발바닥 느끼기',        color:'#5A9A5A'},
+  {id:'g4', emoji:'🫖', name:'따뜻한 음료',    desc:'따뜻한 차 한 잔, 천천히 맛보며 현재에 머물기', color:'#B07040'},
+  {id:'g5', emoji:'🫁', name:'4-7-8 호흡',    desc:'들이쉬기 4초 · 멈춤 7초 · 내쉬기 8초',       color:'#7A5A9A'},
+  {id:'g6', emoji:'🤝', name:'연결 시도',      desc:'신뢰하는 누군가에게 오늘 마음 한 마디 건네기', color:'#8A4A6A'},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════════ */
+
+let S = {
+  phase: 'home',      // home | e | s | g | done
+  eRevealed: false,
+  sRevealed: false,
+  gRevealed: false,
+  selectedE: null,
+  answerS: '',
+  selectedG: null,
+  todayCard: null,   // random E card shown
+  todayQ: null,      // random S question shown
+};
+
+function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function startFlow() {
+  S.phase = 'e';
+  S.eRevealed = false;
+  S.sRevealed = false;
+  S.gRevealed = false;
+  S.selectedE = null;
+  S.answerS = '';
+  S.selectedG = null;
+  S.todayCard = pickRandom(E_CARDS);
+  S.todayQ    = pickRandom(S_QUESTIONS);
+  render();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SVG HELPERS
+═══════════════════════════════════════════════════════════ */
+
+function leafSvg(size=40) {
+  return `<svg viewBox="0 0 80 100" width="${size}" height="${size*1.25}" style="display:block;margin:0 auto;">
+    <rect x="36" y="66" width="8" height="28" rx="2" fill="#5D3A1A"/>
+    <path d="M40 8 L68 50 H12 Z" fill="#3A6A3A" opacity=".95"/>
+    <path d="M40 16 L62 50 H18 Z" fill="#4A7A4A" opacity=".78"/>
+    <path d="M40 24 L56 50 H24 Z" fill="#5A8A5A" opacity=".62"/>
+    <circle cx="40" cy="28" r="9" fill="#6A9A6A" opacity=".22"/>
+  </svg>`;
+}
+
+function seedSvg() {
+  return `<svg viewBox="0 0 60 60" width="40" height="40" style="display:block;margin:0 auto;animation:float 4s ease-in-out infinite">
+    <ellipse cx="30" cy="32" rx="18" ry="22" fill="#4A7A3A" opacity=".85"/>
+    <ellipse cx="30" cy="28" rx="12" ry="16" fill="#5A9A4A" opacity=".7"/>
+    <line x1="30" y1="50" x2="30" y2="58" stroke="#7A5A2A" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M30 52 Q22 48 18 54" fill="none" stroke="#7A5A2A" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M30 54 Q38 50 42 56" fill="none" stroke="#7A5A2A" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PROGRESS INDICATOR
+═══════════════════════════════════════════════════════════ */
+
+function progressHTML() {
+  const steps = [
+    {id:'e', label:'E 감정'},
+    {id:'s', label:'S 자기'},
+    {id:'g', label:'G 뿌리'},
+  ];
+  const order = ['home','e','s','g','done'];
+  const cur = order.indexOf(S.phase);
+
+  return `<div class="progress-track">
+    ${steps.map((st, i) => {
+      const stIdx = i + 1;
+      let cls = 'idle';
+      if (cur > stIdx) cls = 'done';
+      else if (cur === stIdx) cls = 'active';
+      const dot = cls === 'done' ? '' : st.label[0];
+      return `
+        ${i > 0 ? `<div class="prog-line ${cur > i ? 'done' : ''}"></div>` : ''}
+        <div class="prog-step">
+          <div class="prog-dot ${cls}">${cls !== 'done' ? `<span style="font-size:13px">${st.label[0]}</span>` : ''}</div>
+          <div class="prog-label ${cls}">${st.label}</div>
+        </div>`;
+    }).join('')}
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════════════════════════ */
+
+function renderHome() {
+  return `
+<div class="page" style="background:linear-gradient(160deg,var(--bg) 0%,var(--bg-mid) 55%,var(--bg-light) 100%)">
+<div class="wrap">
+
+  <div class="text-center mb24" style="animation:fadeUp .5s ease">
+    <div class="brand-tag">RE:ESG Emotion · Self · Ground</div>
+    <div class="brand-name">감정카드 사용법</div>
+    <div class="brand-sub">카드를 직접 뽑고, 체험하며 배워보세요</div>
+    <div style="margin-top:12px;padding:11px 16px;background:rgba(200,184,136,0.08);border:1px solid rgba(200,184,136,0.2);border-radius:10px;font-size:12px;color:#A09880;line-height:1.85;text-align:left">
+      이 페이지는 RE:ESG 감정카드의 사용 흐름을 이해하기 위한 <strong style="color:#C8B888">공개 체험판</strong>입니다.<br>
+      실제 카드 전체 문안과 전체 리추얼은 구매자 전용 가이드북에서 제공됩니다.
+    </div>
+  </div>
+
+  <!-- 3축 소개 -->
+  <div class="axis-intro-card" style="border-color:#2A5A2A;animation-delay:.1s">
+    <div class="aic-head">
+      <div class="aic-num" style="background:#193A19;color:#7AB87A">E</div>
+      <div class="aic-title" style="color:#7AB87A">Emotion — 감정 인식</div>
+    </div>
+    <div class="aic-desc">지금 내 안에 있는 감정을 알아차리는 단계입니다.<br>
+      <strong style="color:#9FD49F">자연 이미지 카드</strong>를 뽑아 감정에 이름을 붙여보세요.</div>
+  </div>
+
+  <div class="axis-intro-card" style="border-color:#2A4A6A;animation-delay:.2s">
+    <div class="aic-head">
+      <div class="aic-num" style="background:#182B3A;color:#7AAABB">S</div>
+      <div class="aic-title" style="color:#7AAABB">Self — 자기 이해</div>
+    </div>
+    <div class="aic-desc">그 감정이 나에게 말하는 것을 듣는 단계입니다.<br>
+      <strong style="color:#9FCCE0">질문 카드</strong>를 통해 자신의 내면을 탐색해보세요.</div>
+  </div>
+
+  <div class="axis-intro-card" style="border-color:#6A2A4A;animation-delay:.3s">
+    <div class="aic-head">
+      <div class="aic-num" style="background:#3A1A2A;color:#C4829A">G</div>
+      <div class="aic-title" style="color:#C4829A">Ground — 뿌리내림</div>
+    </div>
+    <div class="aic-desc">감정을 지나쳐 일상에 다시 뿌리내리는 단계입니다.<br>
+      <strong style="color:#E0A0B8">실천 카드</strong>를 선택해 오늘의 작은 행동을 찾아보세요.</div>
+  </div>
+
+  <!-- 사용법 순서 -->
+  <div style="background:rgba(12,24,12,0.8);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:18px 0;animation:fadeUp .6s ease .3s both">
+    <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#4A7A4A;margin-bottom:14px">카드 사용 순서</div>
+    <div class="howto-step">
+      <div class="howto-num">1</div>
+      <div class="howto-text"><strong>카드 뒤집기</strong> — 화면을 탭하면 카드가 뒤집힙니다. 실제 카드도 마찬가지예요.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">2</div>
+      <div class="howto-text"><strong>감정 선택</strong> — E 카드의 자연 이미지를 보고 지금 내 감정과 가장 가까운 것을 고르세요.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">3</div>
+      <div class="howto-text"><strong>질문에 답하기</strong> — S 카드의 질문을 읽고, 잠깐 멈춰 내면을 살펴보세요. 완성된 문장이 아니어도 됩니다.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">4</div>
+      <div class="howto-text"><strong>실천 선택</strong> — G 카드에서 오늘 할 수 있는 작은 행동 하나를 고릅니다.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-num">5</div>
+      <div class="howto-text"><strong>마무리</strong> — 오늘의 감정 흐름을 짧게 요약하고 일상으로 돌아갑니다.</div>
+    </div>
+  </div>
+
+  <div class="warn-box mb20" style="animation:fadeUp .6s ease .4s both">
+    💡 이 체험판에는 RE:ESG 사용 흐름을 이해하기 위한 대표 카드 일부만 포함되어 있습니다.<br>
+    실물 RE:ESG 카드셋은 감정카드 88장 + 가이드카드 2장, 총 90장으로 구성되며,<br>
+    구매자 전용 워크북·트래커·리추얼·통합 가이드북이 함께 제공됩니다.
+  </div>
+
+  <div style="background:rgba(90,58,26,0.25);border:1px solid rgba(200,160,100,0.3);border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#B09870;line-height:1.85;animation:fadeUp .6s ease .45s both">
+    <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A860;margin-bottom:6px;font-weight:bold">안전 안내</div>
+    RE:ESG 감정카드는 감정 인식과 자기돌봄을 돕는 도구입니다.<br>
+    심리상담, 임상치료, 의료 행위를 대체하지 않습니다.<br>
+    체험 중 불편한 감정이 올라오면 잠시 멈추고 쉬어가세요.
+  </div>
+  <button class="btn btn-gold btn-block" id="btn-start" style="animation:fadeUp .6s ease .5s both;font-size:16px;padding:16px">
+    🌱 카드 체험 시작하기
+  </button>
+  <div style="margin-top:32px;padding-top:16px;border-top:1px solid #1A3020;font-size:11px;color:#3A5A3A;line-height:1.9;text-align:center">
+    본 체험 페이지의 카드 흐름, 문안, 질문, 리추얼 구성은 RE:ESG 감정카드의 공개 샘플입니다.<br>
+    무단 복제, 재배포, 상업적 활용, 2차 저작물 제작을 금합니다.<br>
+    <span style="color:#2A4A2A">ⓒ 2026 아마도랩 (Amado Lab). All rights reserved.</span>
+  </div>
+
+</div>
+</div>`;
+}
+
+/* ── STEP E ── */
+function renderStepE() {
+  return `
+<div class="page" style="background:linear-gradient(160deg,#0A1A0C 0%,#0E2010 60%,#152818 100%)">
+<div class="wrap">
+
+  ${progressHTML()}
+
+  <div class="step-banner">
+    <div class="step-banner-num">Step 1 · E축</div>
+    <div class="step-banner-title">Emotion — 지금 내 감정은?</div>
+    <div class="step-banner-desc">카드 뒷면을 탭해 뒤집으세요. 자연 이미지를 보고 지금 내 감정과 가장 가까운 것을 하나 고르세요. <strong style="color:#9FD49F">정답은 없습니다</strong> — 직관적으로 느끼는 것을 고르세요.</div>
+  </div>
+
+  ${!S.eRevealed ? `
+    <div class="card-back-wrap">
+      <div class="card-back" id="btn-flip-e">
+        <div class="card-back-icon">🃏</div>
+        <div style="font-size:16px;color:var(--gold);margin-bottom:8px;font-style:italic">E 감정 카드</div>
+        <div class="card-back-hint">탭하여 카드 뒤집기</div>
+        <div style="margin-top:14px;font-size:11px;color:#3A6A3A;letter-spacing:2px">TAP TO REVEAL</div>
+      </div>
+    </div>
+    <div class="info-box">
+      🌿 실제 카드에서도 카드를 고르고, 문장과 질문을 읽으며 감정을 탐색할 수 있습니다.<br>체험판의 화면 연출은 사용 흐름을 이해하기 위한 예시입니다.
+    </div>
+  ` : `
+    <div class="revealed-card">
+      <div class="rc-accent" style="background:linear-gradient(90deg,var(--e-color),#C8A060)"></div>
+      <div class="rc-nature-img">${S.todayCard.emoji}</div>
+      <div class="rc-body">
+        <div class="flex-b mb8">
+          <span class="axis-badge axis-E">E · Emotion</span>
+          <span style="font-size:11px;color:var(--ink-mute)">RE:ESG 감정카드</span>
+        </div>
+        <div class="rc-name">${S.todayCard.name}</div>
+        <div class="rc-desc">${S.todayCard.desc}</div>
+        <div class="rc-prompt">"${S.todayCard.prompt}"</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>지금 내 감정과 가장 가까운 것을 하나 골라보세요.</strong><br>
+      카드 이미지가 꼭 맞지 않아도 됩니다. 가장 가까운 것을 선택하세요.
+    </div>
+
+    <div class="emo-grid mb8">
+      ${E_CARDS.map(e => `
+        <button class="emo-btn ${S.selectedE?.id === e.id ? 'selected-E' : ''}" data-eid="${e.id}">
+          <div class="emo-dot" style="background:${e.color}"></div>
+          <div>
+            <div class="emo-name">${e.emoji} ${e.name}</div>
+            <div class="emo-sub">${e.desc.slice(0,18)}…</div>
+          </div>
+          ${S.selectedE?.id === e.id ? '<span style="margin-left:auto;font-size:16px">✓</span>' : ''}
+        </button>
+      `).join('')}
+    </div>
+
+    ${S.selectedE ? `
+      <div class="info-box" style="background:#EAF5EA;border-left:3px solid #4A8A4A">
+        ✅ <strong>"${S.selectedE.name}"</strong>을 선택했습니다.<br>
+        <span style="font-size:12px;color:#5A6A50">${S.selectedE.prompt}</span>
+      </div>
+    ` : ''}
+
+    <button class="btn btn-green btn-block" id="btn-next-e" ${!S.selectedE ? 'disabled' : ''}>
+      다음 단계 — S 자기 이해 →
+    </button>
+  `}
+
+</div>
+</div>`;
+}
+
+/* ── STEP S ── */
+function renderStepS() {
+  return `
+<div class="page" style="background:linear-gradient(160deg,#0A120F 0%,#0C1A28 55%,#0E2030 100%)">
+<div class="wrap">
+
+  ${progressHTML()}
+
+  <div class="step-banner">
+    <div class="step-banner-num">Step 2 · S축</div>
+    <div class="step-banner-title">Self — 이 감정이 말하는 것은?</div>
+    <div class="step-banner-desc">S 카드의 질문을 읽고 잠깐 내면을 살펴보세요. 완성된 문장이 아니어도, 단어 하나여도 괜찮습니다. <strong style="color:#9FCCE0">판단 없이 솔직하게</strong> 적어보세요.</div>
+  </div>
+
+  <!-- 앞 단계 요약 -->
+  <div style="background:rgba(12,24,12,0.7);border:1px solid #1A3A20;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+    <div style="width:8px;height:8px;border-radius:50%;background:var(--e-color);flex-shrink:0"></div>
+    <div style="font-size:13px;color:#9A9A8A">E단계에서 선택한 감정: <strong style="color:#DDD6C0">${S.selectedE?.emoji} ${S.selectedE?.name}</strong></div>
+  </div>
+
+  ${!S.sRevealed ? `
+    <div class="card-back-wrap">
+      <div class="card-back" id="btn-flip-s" style="border-color:#2A4A6A;animation:none;box-shadow:0 0 20px rgba(55,138,221,0.15)">
+        <div class="card-back-icon">🌿</div>
+        <div style="font-size:16px;color:#7AAABB;margin-bottom:8px;font-style:italic">S 자기이해 카드</div>
+        <div class="card-back-hint">탭하여 질문 카드 뒤집기</div>
+        <div style="margin-top:14px;font-size:11px;color:#2A5A7A;letter-spacing:2px">TAP TO REVEAL</div>
+      </div>
+    </div>
+    <div class="info-box">
+      💙 S 카드에는 감정을 더 깊이 이해할 수 있는 질문이 담겨 있습니다.
+    </div>
+  ` : `
+    <div class="revealed-card">
+      <div class="rc-accent" style="background:linear-gradient(90deg,var(--s-color),#6090C0)"></div>
+      <div class="rc-nature-img" style="background:linear-gradient(135deg,#E8EFF8,#EEF4FF)">${S.todayQ.emoji}</div>
+      <div class="rc-body">
+        <div class="flex-b mb8">
+          <span class="axis-badge axis-S">S · Self</span>
+          <span style="font-size:11px;color:var(--ink-mute)">RE:ESG 자기이해카드</span>
+        </div>
+        <div class="rc-prompt" style="border-left-color:#4A7AAA;font-size:16px;line-height:1.9;font-style:normal;font-weight:bold;margin-bottom:14px">
+          ${S.todayQ.question}
+        </div>
+        <div style="font-size:12px;color:var(--ink-mute);font-style:italic">${S.todayQ.hint}</div>
+      </div>
+    </div>
+
+    <div class="info-box" style="background:#EAF0F5">
+      <strong>위 질문에 자유롭게 답해보세요.</strong><br>
+      길지 않아도 됩니다. 단어 하나, 짧은 문장도 충분합니다.
+    </div>
+
+    <textarea class="q-inp mb14" id="inp-s" placeholder="지금 떠오르는 것을 적어보세요…" oninput="S.answerS=this.value">${S.answerS}</textarea>
+
+    <div class="info-box" style="font-size:12px;color:#6A7A8A">
+      💡 <strong>팁:</strong> 실물 카드로 사용할 때는 감정일기나 워크북에 직접 써보세요. 쓰는 행위 자체가 감정을 정리하는 데 도움이 됩니다.
+    </div>
+
+    <button class="btn btn-blue btn-block" id="btn-next-s" ${!S.answerS.trim() ? 'disabled' : ''}>
+      다음 단계 — G 뿌리내림 →
+    </button>
+  `}
+
+</div>
+</div>`;
+}
+
+/* ── STEP G ── */
+function renderStepG() {
+  return `
+<div class="page" style="background:linear-gradient(160deg,#100810 0%,#1E0A18 55%,#2A1020 100%)">
+<div class="wrap">
+
+  ${progressHTML()}
+
+  <div class="step-banner">
+    <div class="step-banner-num">Step 3 · G축</div>
+    <div class="step-banner-title">Ground — 오늘의 작은 실천</div>
+    <div class="step-banner-desc">G 카드를 뽑아 오늘 할 수 있는 작은 행동 하나를 선택하세요. 감정을 억누르는 것이 아니라, <strong style="color:#E0A0B8">감정과 함께 일상에 뿌리내리는</strong> 것이 목표입니다.</div>
+  </div>
+
+  <!-- 앞 단계 요약 -->
+  <div style="background:rgba(12,8,12,0.7);border:1px solid #3A1A2A;border-radius:10px;padding:12px 16px;margin-bottom:16px">
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--e-color)"></div>
+      <div style="font-size:12px;color:#9A9A8A">감정: <strong style="color:#DDD6C0">${S.selectedE?.emoji} ${S.selectedE?.name}</strong></div>
+    </div>
+    ${S.answerS ? `<div style="font-size:12px;color:#8A9A8A;padding-left:18px;font-style:italic">"${S.answerS.slice(0,40)}${S.answerS.length>40?'…':''}"</div>` : ''}
+  </div>
+
+  ${!S.gRevealed ? `
+    <div class="card-back-wrap">
+      <div class="card-back" id="btn-flip-g" style="border-color:#4A1A3A;animation:none;box-shadow:0 0 20px rgba(212,83,126,0.15)">
+        <div class="card-back-icon">🌸</div>
+        <div style="font-size:16px;color:#C4829A;margin-bottom:8px;font-style:italic">G 뿌리내림 카드</div>
+        <div class="card-back-hint">탭하여 실천 카드 뒤집기</div>
+        <div style="margin-top:14px;font-size:11px;color:#5A2A4A;letter-spacing:2px">TAP TO REVEAL</div>
+      </div>
+    </div>
+    <div class="info-box">
+      💛 G 카드에는 오늘 할 수 있는 구체적인 감정 돌봄 실천이 담겨 있습니다.
+    </div>
+  ` : `
+    <div class="revealed-card">
+      <div class="rc-accent" style="background:linear-gradient(90deg,var(--g-color),#A04070)"></div>
+      <div class="rc-nature-img" style="background:linear-gradient(135deg,#F8E8F0,#FFF0F5)">🌸</div>
+      <div class="rc-body">
+        <div class="flex-b mb12">
+          <span class="axis-badge axis-G">G · Ground</span>
+          <span style="font-size:11px;color:var(--ink-mute)">RE:ESG 뿌리내림카드</span>
+        </div>
+        <div class="rc-label">오늘의 실천을 하나 선택하세요</div>
+      </div>
+    </div>
+
+    <div class="prac-grid mb14">
+      ${G_CARDS.map(g => `
+        <button class="prac-btn ${S.selectedG?.id === g.id ? 'selected' : ''}" data-gid="${g.id}">
+          <div class="prac-icon">${g.emoji}</div>
+          <div class="prac-name">${g.name}</div>
+          <div class="prac-desc">${g.desc}</div>
+          ${S.selectedG?.id === g.id ? '<div style="margin-top:6px;font-size:12px;color:#8A4A6A;font-weight:bold">✓ 선택됨</div>' : ''}
+        </button>
+      `).join('')}
+    </div>
+
+    ${S.selectedG ? `
+      <div class="info-box" style="background:#F5E8EE;border-left:3px solid #8A4A6A">
+        🌸 <strong>"${S.selectedG.name}"</strong>을 선택했습니다.<br>
+        <span style="font-size:12px;color:#7A5A6A">${S.selectedG.desc}</span>
+      </div>
+    ` : `
+      <div class="info-box">오늘 실제로 할 수 있는 것을 선택해보세요. 아주 작아도 괜찮습니다.</div>
+    `}
+
+    <button class="btn btn-rose btn-block" id="btn-next-g" ${!S.selectedG ? 'disabled' : ''}>
+      리추얼 완성 — 오늘의 감정 정리 →
+    </button>
+  `}
+
+</div>
+</div>`;
+}
+
+/* ── DONE ── */
+function renderDone() {
+  return `
+<div class="page" style="background:linear-gradient(160deg,#0A1A0C 0%,#112016 55%,#192B1C 100%)">
+<div class="wrap">
+
+  <div class="text-center mb20" style="animation:fadeUp .5s ease">
+    <div style="font-size:48px;animation:celebrate .8s ease;margin-bottom:8px">🌱</div>
+    <div class="brand-tag">오늘의 리추얼 완성</div>
+    <div style="font-size:22px;color:var(--gold);font-style:italic;margin-top:4px">감정 생태 기록</div>
+  </div>
+
+  <!-- E 요약 -->
+  <div class="summary-block">
+    <div class="summary-accent" style="background:var(--e-color)"></div>
+    <div class="summary-body">
+      <div class="summary-row">
+        <div class="summary-dot" style="background:var(--e-color)"></div>
+        <div>
+          <div class="summary-label">E · 오늘의 감정</div>
+          <div class="summary-val">${S.selectedE?.emoji} ${S.selectedE?.name}</div>
+          <div class="summary-sub">${S.selectedE?.desc}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S 요약 -->
+  <div class="summary-block">
+    <div class="summary-accent" style="background:var(--s-color)"></div>
+    <div class="summary-body">
+      <div class="summary-row">
+        <div class="summary-dot" style="background:var(--s-color)"></div>
+        <div>
+          <div class="summary-label">S · 내가 발견한 것</div>
+          <div class="summary-val" style="font-size:14px;line-height:1.8;font-style:italic">"${S.answerS}"</div>
+          <div class="summary-sub">질문: ${S.todayQ?.question}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- G 요약 -->
+  <div class="summary-block">
+    <div class="summary-accent" style="background:var(--g-color)"></div>
+    <div class="summary-body">
+      <div class="summary-row">
+        <div class="summary-dot" style="background:var(--g-color)"></div>
+        <div>
+          <div class="summary-label">G · 오늘의 실천</div>
+          <div class="summary-val">${S.selectedG?.emoji} ${S.selectedG?.name}</div>
+          <div class="summary-sub">${S.selectedG?.desc}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESG 흐름 설명 -->
+  <div style="background:rgba(12,24,12,0.85);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:18px;animation:fadeUp .7s ease .2s both">
+    <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#4A7A4A;margin-bottom:12px">E → S → G 흐름 이해하기</div>
+    <div style="font-size:13px;color:#9A9A8A;line-height:2">
+      <span style="color:#7AB87A">감정을 알아차리고 (E)</span> →
+      <span style="color:#7AAABB"> 그 감정의 의미를 이해하며 (S)</span> →
+      <span style="color:#C4829A"> 작은 실천으로 뿌리내리는 것 (G).</span><br><br>
+      이 세 단계가 RE:ESG 카드의 핵심 여정입니다.<br>
+      매일 반복할수록 감정을 더 섬세하게 알아차리게 됩니다.
+    </div>
+  </div>
+
+  <div class="quote-box mb18" style="animation:fadeUp .7s ease .3s both">
+    감정은 나의 생태이며,<br>
+    함께 울고 피어나는 관계가 곧 나의 사회다.<br>
+    그리고 내 삶의 뿌리는,<br>
+    나를 잃지 않는 것에서 비롯된다.
+  </div>
+
+  <!-- 실물 카드 안내 -->
+  <div style="background:rgba(40,20,10,0.7);border:1px solid rgba(138,106,74,0.3);border-radius:12px;padding:18px 20px;margin-bottom:18px;animation:fadeUp .7s ease .4s both">
+    <div style="font-size:11px;letter-spacing:1.5px;color:#B8A060;margin-bottom:10px;text-transform:uppercase">RE:ESG 실물 카드셋으로 더 깊이</div>
+    <div style="font-size:13px;color:#AAA098;line-height:1.9">
+      체험판에는 대표 카드만 포함되어 있습니다.<br>
+      <strong style="color:#DDD6C0">실물 RE:ESG 카드셋</strong>에는 88장의 다양한 감정카드와 자연 이미지, 가이드카드 2장이 포함되어 있어 더 풍부한 감정 탐색이 가능합니다.<br><br>
+      틴케이스 · 구매자 전용 디지털 자료 6종 포함.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:fadeUp .7s ease .5s both;margin-bottom:12px">
+    <button class="btn btn-ghost btn-block" id="btn-retry">다시 체험하기</button>
+    <button class="btn btn-gold btn-block" id="btn-home-done">처음으로</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:fadeUp .7s ease .6s both;margin-bottom:28px">
+    <a href="https://meeyann.github.io/re-esg/" target="_blank" style="display:block;text-align:center;padding:13px 10px;background:#2A4A3A;color:#9FD49F;border-radius:10px;font-size:13px;font-weight:bold;text-decoration:none;letter-spacing:.3px;border:1px solid #3A6A4A">
+      펀딩 페이지 보러가기 →
+    </a>
+    <a href="https://meeyann.github.io/re-esg-guide/" target="_blank" style="display:block;text-align:center;padding:13px 10px;background:#1A2A3A;color:#7AAABB;border-radius:10px;font-size:13px;font-weight:bold;text-decoration:none;letter-spacing:.3px;border:1px solid #2A4A6A">
+      가이드북 미리보기 →
+    </a>
+  </div>
+
+  <div style="padding-top:16px;border-top:1px solid #1A3020;font-size:11px;color:#3A5A3A;line-height:1.9;text-align:center">
+    본 체험 페이지의 카드 흐름, 문안, 질문, 리추얼 구성은 RE:ESG 감정카드의 공개 샘플입니다.<br>
+    무단 복제, 재배포, 상업적 활용, 2차 저작물 제작을 금합니다.<br>
+    <span style="color:#2A4A2A">ⓒ 2026 아마도랩 (Amado Lab). All rights reserved.</span>
+  </div>
+
+</div>
+</div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════════════════ */
+
+function render() {
+  let html = '';
+  if (S.phase === 'home') html = renderHome();
+  else if (S.phase === 'e')  html = renderStepE();
+  else if (S.phase === 's')  html = renderStepS();
+  else if (S.phase === 'g')  html = renderStepG();
+  else if (S.phase === 'done') html = renderDone();
+
+  document.getElementById('app').innerHTML = html;
+  window.scrollTo({top:0, behavior:'smooth'});
+  bindEvents();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EVENTS
+═══════════════════════════════════════════════════════════ */
+
+function bindEvents() {
+  // Home
+  document.getElementById('btn-start')?.addEventListener('click', startFlow);
+
+  // E
+  document.getElementById('btn-flip-e')?.addEventListener('click', () => {
+    S.eRevealed = true; render();
+  });
+  document.querySelectorAll('[data-eid]').forEach(el => {
+    el.addEventListener('click', () => {
+      S.selectedE = E_CARDS.find(e => e.id === el.dataset.eid);
+      render();
+    });
+  });
+  document.getElementById('btn-next-e')?.addEventListener('click', () => {
+    S.phase = 's'; render();
+  });
+
+  // S
+  document.getElementById('btn-flip-s')?.addEventListener('click', () => {
+    S.sRevealed = true; render();
+  });
+  document.getElementById('inp-s')?.addEventListener('input', e => {
+    S.answerS = e.target.value;
+    const btn = document.getElementById('btn-next-s');
+    if (btn) btn.disabled = !S.answerS.trim();
+  });
+  document.getElementById('btn-next-s')?.addEventListener('click', () => {
+    S.phase = 'g'; render();
+  });
+
+  // G
+  document.getElementById('btn-flip-g')?.addEventListener('click', () => {
+    S.gRevealed = true; render();
+  });
+  document.querySelectorAll('[data-gid]').forEach(el => {
+    el.addEventListener('click', () => {
+      S.selectedG = G_CARDS.find(g => g.id === el.dataset.gid);
+      render();
+    });
+  });
+  document.getElementById('btn-next-g')?.addEventListener('click', () => {
+    S.phase = 'done'; render();
+  });
+
+  // Done
+  document.getElementById('btn-retry')?.addEventListener('click', startFlow);
+  document.getElementById('btn-home-done')?.addEventListener('click', () => {
+    S.phase = 'home'; render();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+render();
+</script>
+
+<div style="position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:200;">
+  <a href="reesg_buyer_start_guide.html"
+     style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:100px;background:rgba(250,248,243,0.95);border:1px solid #DDD8CE;font-size:0.75rem;color:#7A7568;text-decoration:none;font-family:'Noto Sans KR',sans-serif;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+    ← 구매자 시작 안내로
+  </a>
+</div>
+</body>
+</html>
