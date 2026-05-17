@@ -330,6 +330,11 @@ nav {
 .depth-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
 }
+.depth-grid-5 {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+}
+.depth-grid-5 .depth-card:nth-child(-n+3) { grid-column: span 2; }
+.depth-grid-5 .depth-card:nth-child(n+4)  { grid-column: span 3; }
 .depth-card {
   background: var(--white); border: 1px solid var(--border);
   border-radius: 12px; padding: 20px 18px;
@@ -488,6 +493,9 @@ footer {
   .ff-step:last-child { border-bottom: none; }
   .routine-row { grid-template-columns: 1fr; }
   .depth-grid { grid-template-columns: 1fr 1fr; }
+  .depth-grid-5 { grid-template-columns: 1fr 1fr; }
+  .depth-grid-5 .depth-card:nth-child(-n+3),
+  .depth-grid-5 .depth-card:nth-child(n+4) { grid-column: span 1; }
   .community-grid { grid-template-columns: 1fr; }
   .inst-row { grid-template-columns: 1fr; }
   .cta-box { padding: 32px 24px; }
@@ -497,6 +505,9 @@ footer {
 @media (max-width: 400px) {
   .unbox-grid { grid-template-columns: 1fr; }
   .depth-grid { grid-template-columns: 1fr; }
+  .depth-grid-5 { grid-template-columns: 1fr; }
+  .depth-grid-5 .depth-card:nth-child(-n+3),
+  .depth-grid-5 .depth-card:nth-child(n+4) { grid-column: span 1; }
 }
 </style>
 </head>
@@ -551,10 +562,11 @@ footer {
         <span class="hcm-num">STEP 01</span>
         <span class="hcm-label">카드 구성 확인</span>
       </div>
-      <div class="hero-card-mini hcm-2">
+      <a class="hero-card-mini hcm-2" href="reesg_first_card_onboarding.html"
+         style="text-decoration:none;cursor:pointer;">
         <span class="hcm-num">STEP 02</span>
-        <span class="hcm-label">오늘 바로 해보기</span>
-      </div>
+        <span class="hcm-label">첫 카드 온보딩 →</span>
+      </a>
       <div class="hero-card-mini hcm-3">
         <span class="hcm-num">STEP 03</span>
         <span class="hcm-label">7일 루틴 시작</span>
@@ -610,7 +622,7 @@ footer {
       <div class="unbox-full">
         <span class="uf-icon">📖</span>
         <div class="uf-body">
-          <h4>통합 가이드북 v3.1 (4권 구성)</h4>
+          <h4>가이드북 안내</h4>
           <p>카드 철학·구조·사용법·활용 가이드·안전 사용·FAQ까지 포함된 전체 안내서입니다. 처음엔 1권부터 천천히 읽어보세요.</p>
           <div class="uf-chips">
             <span class="uf-chip">제1권 철학</span>
@@ -658,8 +670,23 @@ footer {
         <h4>처음 카드를 고르는 것이 어렵다면</h4>
         <p>카드를 뒤집어 바닥에 골고루 펼쳐두고, 손이 가는 카드를 자연스럽게 집어보세요.
         또는 오늘 날씨, 오늘 기분과 가장 닮은 자연 이미지를 찾는 방법도 좋습니다.
-        RE:ESG 감정 유형 테스트를 먼저 해보는 것도 출발점이 됩니다.</p>
+        아래 온보딩을 따라가면 처음 3분을 자연스럽게 시작할 수 있어요.</p>
       </div>
+    </div>
+
+    <!-- Step 02 CTA — 온보딩 연결 -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;padding-top:20px;border-top:1px solid var(--border);">
+      <a class="btn btn-primary" href="reesg_first_card_onboarding.html"
+         style="display:inline-flex;align-items:center;gap:6px;padding:13px 26px;border-radius:100px;background:var(--e);color:white;font-size:0.88rem;font-weight:700;text-decoration:none;letter-spacing:0.02em;transition:background 0.2s;"
+         onmouseover="this.style.background='#1e4e38'" onmouseout="this.style.background='var(--e)'">
+        🌱 첫 카드 온보딩 시작하기 →
+      </a>
+      <a class="btn" href="RE_ESG_emotion_type_test_v6.html"
+         style="display:inline-flex;align-items:center;gap:6px;padding:12px 22px;border-radius:100px;border:1.5px solid var(--border);background:var(--white);color:var(--muted);font-size:0.85rem;font-weight:500;text-decoration:none;transition:all 0.2s;"
+         onmouseover="this.style.borderColor='var(--e)';this.style.color='var(--e)'"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+        감정 유형 테스트 먼저 해보기
+      </a>
     </div>
   </div>
 
@@ -668,8 +695,9 @@ footer {
     <div class="section-label">Step 03 · 7일 루틴</div>
     <h2 class="section-h2">7일 동안<br><em>감정 여정을 이어가세요</em></h2>
     <p class="section-p">
-      하루 5~10분, 카드와 워크북을 함께 쓰는 것만으로 충분합니다.
-      7일 워크북과 실천 트래커 중 편한 것을 골라 시작하세요.
+      7일 워크북 PDF, 감정 트래커, 통합 가이드북 PDF는
+구매자 안내 QR을 통해 제공됩니다.
+구매자 전용 자료는 무단 복제, 공유, 재배포를 금합니다.
     </p>
 
     <div class="routine-row">
@@ -690,8 +718,8 @@ footer {
           </div>
         </div>
         <div class="rc-foot">
-          <a class="rc-link" href="re_esg_workbook_welcome_v2.html">
-            7일 워크북 시작하기 →
+          <a class="rc-link" href="mailto:amadolab.official@gmail.com">
+            7일 워크북 신청하기 →
           </a>
         </div>
       </div>
@@ -731,30 +759,54 @@ footer {
   <!-- ──────────── STEP 04 · 더 깊게 쓰기 ──────────── -->
   <div class="section fade-in" id="step04">
     <div class="section-label">Step 04 · 더 깊게 쓰기</div>
-    <h2 class="section-h2">준비가 되면<br><em>더 깊이 탐색합니다</em></h2>
+    <h2 class="section-h2">준비가 되면<br><em>이 5가지로 연결됩니다</em></h2>
     <p class="section-p">
-      7일 루틴에 익숙해졌다면, 아래 자료로 RE:ESG를 더 풍부하게 활용할 수 있습니다.
+      7일 루틴에 익숙해졌다면, 아래 자료로 RE:ESG를 더 풍부하게 활용할 수 있습니다.<br>
+      구매자 전용 자료는 무단 복제·공유·재배포를 금합니다.
     </p>
 
-    <div class="depth-grid">
+    <div class="depth-grid-5">
+
+      <!-- 1. 통합 가이드북 PDF -->
       <div class="depth-card">
         <span class="depth-badge db-paid">구매자 전용</span>
-        <h4>통합 가이드북 전체</h4>
-        <p>88장 카드 구조, 철학, 실전 활용, 안전 사용 체계까지 포함된 전체 안내서. PART 1~6 구성.</p>
-        <a class="depth-link dl-e" href="RE_ESG_guide_v2.html">가이드북 열기 →</a>
+        <h4>📖 통합 가이드북 PDF</h4>
+        <p>88장 카드 구조, 철학, 실전 활용, 안전 사용 체계까지 담긴 전체 안내서. 제1~4권 구성. 카드와 함께 읽으면 더 깊어집니다.</p>
+        <a class="depth-link dl-e" href="mailto:amadolab.official@gmail.com?subject=RE:ESG 통합 가이드북 PDF 요청&body=구매자 시작 안내 페이지를 통해 가이드북 PDF를 요청합니다.">가이드북 받기 →</a>
       </div>
+
+      <!-- 2. 감정 리추얼 템플릿 PDF -->
+      <div class="depth-card">
+        <span class="depth-badge db-paid">구매자 전용</span>
+        <h4>🗒 감정 리추얼 템플릿 PDF</h4>
+        <p>E·S·G 각 단계에 맞춘 저널링 양식과 체크인 템플릿. 인쇄하거나 PDF에 직접 기록할 수 있습니다.</p>
+        <a class="depth-link dl-e" href="mailto:amadolab.official@gmail.com?subject=RE:ESG 리추얼 템플릿 PDF 요청&body=구매자 시작 안내 페이지를 통해 리추얼 템플릿 PDF를 요청합니다.">템플릿 받기 →</a>
+      </div>
+
+      <!-- 3. 직접 체험 (로컬) -->
+      <div class="depth-card">
+        <span class="depth-badge db-open">바로 체험</span>
+        <h4>🃏 E→S→G 카드 직접 체험</h4>
+        <p>E 감정 인식 → S 자기 이해 → G 실천 선택까지 실제 카드 흐름을 인터랙티브하게 경험합니다. 카드를 처음 쓰는 날, 리추얼 감을 잡고 싶을 때 활용하세요.</p>
+        <a class="depth-link dl-s" href="reesg_experience.html">체험 시작하기 →</a>
+      </div>
+
+      <!-- 4. 트래커 -->
+      <div class="depth-card">
+        <span class="depth-badge db-open">바로 사용</span>
+        <h4>📊 7일 · 30일 실천 트래커</h4>
+        <p>매일 카드 + 한 줄 기록으로 감정 실천을 트래킹합니다. 완료 후 캡처해 오픈채팅에 나눌 수 있습니다. 소요 3~5분.</p>
+        <a class="depth-link dl-g" href="https://meeyann.github.io/tracker" target="_blank" rel="noopener">트래커 열기 →</a>
+      </div>
+
+      <!-- 5. 리추얼 샘플 / 개별 리추얼 -->
       <div class="depth-card">
         <span class="depth-badge db-open">무료 공개</span>
-        <h4>QR 리추얼 카드</h4>
-        <p>카드 뒷면 QR로 연결되는 오디오 가이드·저널링 질문·체크인 리추얼 샘플. 12장 구성.</p>
-        <a class="depth-link dl-s" href="https://meeyann.github.io/re-esg-test/re_esg_qr_ritual_cards_v2_final_links">리추얼 카드 열기 →</a>
+        <h4>✨ 리추얼 샘플 카드 (12장)</h4>
+        <p>카드 뒷면 QR로 연결되는 오디오 가이드·저널링 질문·체크인 리추얼 샘플. 각 카드별 개별 리추얼 페이지로도 연결됩니다.</p>
+        <a class="depth-link dl-s" href="https://meeyann.github.io/re-esg-test/re_esg_qr_ritual_cards_v2_final_links" target="_blank" rel="noopener">리추얼 카드 열기 →</a>
       </div>
-      <div class="depth-card">
-        <span class="depth-badge db-open">무료 공개</span>
-        <h4>감정 유형 테스트</h4>
-        <p>12문항으로 8가지 유형 중 나의 감정 생태 유형을 확인하고 추천 카드를 받습니다.</p>
-        <a class="depth-link dl-e" href="RE_ESG_emotion_type_test_v6.html">유형 테스트 하기 →</a>
-      </div>
+
     </div>
   </div>
 
@@ -811,12 +863,12 @@ footer {
       <div class="inst-card">
         <h4>🏢 기관·기업 프로그램 문의</h4>
         <p>복지관, 교육재단, 청소년센터, 기업 EAP 등 기관 도입을 위한 파일럿 운영 상담, 제안서 요청을 받고 있습니다.</p>
-        <a class="inst-link" href="https://meeyann.github.io/hub">기관용 허브 바로가기 →</a>
+        <a class="inst-link" href="https://tally.so/r/rjV205" target="_blank" rel="noopener">기관 문의 양식 작성하기 →</a>
       </div>
       <div class="inst-card">
         <h4>📋 퍼실리테이터 운영 안내</h4>
         <p>1회기~8회기 표준 운영안, 체크인 도구, 감정 유형 테스트, QR 리추얼 카드를 함께 사용할 수 있습니다.</p>
-        <a class="inst-link" href="workbook_v2.html">워크북 허브 보기 →</a>
+        <a class="inst-link" href="mailto:amadolab.official@gmail.com?subject=RE:ESG 퍼실리테이터 운영 문의">관련 문의하기 →</a>
       </div>
     </div>
 
@@ -869,11 +921,11 @@ footer {
     </div>
     <div class="footer-tagline">Emotion · Self · Ground</div>
     <div class="footer-links">
-      <a href="index_reesg_v7.html">홈페이지</a>
-      <a href="re_esg_guide_preview_v3.html">가이드북 미리보기</a>
-      <a href="RE_ESG_emotion_type_test_v6.html">감정 유형 테스트</a>
-      <a href="reesg_institution_qr_hub_v2.html">기관용 허브</a>
-      <a href="mailto:amadolab.official@gmail.com">이메일</a>
+      <a href="https://meeyann.github.io/re-esg/">홈페이지</a>
+      <a href="https://meeyann.github.io/re-esg-guide/">가이드북 미리보기</a>
+      <a href="https://meeyann.github.io/re-esg-test/">감정 유형 테스트</a>
+      <a href="reesg_experience.html">E→S→G 카드 체험</a>
+      <a href="mailto:amadolab.official@gmail.com">이메일 문의</a>
     </div>
     <div class="footer-copy">ⓒ 2026 Amado Lab (아마도랩) · amadolab.official@gmail.com</div>
   </div>
