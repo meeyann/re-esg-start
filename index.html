@@ -510,6 +510,7 @@ footer {
   .depth-grid-5 .depth-card:nth-child(n+4) { grid-column: span 1; }
 }
 </style>
+<script src="https://tally.so/widgets/embed.js" async></script>
 </head>
 <body>
 
@@ -623,13 +624,7 @@ footer {
         <span class="uf-icon">📖</span>
         <div class="uf-body">
           <h4>가이드북 안내</h4>
-          <p>카드 철학·구조·사용법·활용 가이드·안전 사용·FAQ까지 포함된 전체 안내서입니다. 처음엔 1권부터 천천히 읽어보세요.</p>
-          <div class="uf-chips">
-            <span class="uf-chip">제1권 철학</span>
-            <span class="uf-chip">제2권 사용법</span>
-            <span class="uf-chip">제3권 활용</span>
-            <span class="uf-chip">제4권 운영</span>
-          </div>
+          <p>카드 철학·구조·사용법·활용 가이드·안전 사용·FAQ까지 포함된 전체 안내서입니다. PDF로 제공됩니다.</p>
         </div>
       </div>
     </div>
@@ -771,7 +766,7 @@ footer {
       <div class="depth-card">
         <span class="depth-badge db-paid">구매자 전용</span>
         <h4>📖 통합 가이드북 PDF</h4>
-        <p>88장 카드 구조, 철학, 실전 활용, 안전 사용 체계까지 담긴 전체 안내서. 제1~4권 구성. 카드와 함께 읽으면 더 깊어집니다.</p>
+        <p>88장 카드 구조, 철학, 실전 활용, 안전 사용 체계까지 담긴 전체 안내서. 카드와 함께 읽으면 더 깊어집니다.</p>
         <a class="depth-link dl-e" href="mailto:amadolab.official@gmail.com?subject=RE:ESG 통합 가이드북 PDF 요청&body=구매자 시작 안내 페이지를 통해 가이드북 PDF를 요청합니다.">가이드북 받기 →</a>
       </div>
 
@@ -859,21 +854,17 @@ footer {
       기관용 허브에서 안내를 확인하세요.
     </p>
 
-    <div class="inst-row">
+    <div class="inst-row" style="grid-template-columns:1fr;">
       <div class="inst-card">
         <h4>🏢 기관·기업 프로그램 문의</h4>
         <p>복지관, 교육재단, 청소년센터, 기업 EAP 등 기관 도입을 위한 파일럿 운영 상담, 제안서 요청을 받고 있습니다.</p>
         <a class="inst-link" href="https://tally.so/r/rjV205" target="_blank" rel="noopener">기관 문의 양식 작성하기 →</a>
       </div>
-      <div class="inst-card">
-        <h4>📋 퍼실리테이터 운영 안내</h4>
-        <p>1회기~8회기 표준 운영안, 체크인 도구, 감정 유형 테스트, QR 리추얼 카드를 함께 사용할 수 있습니다.</p>
-        <a class="inst-link" href="mailto:amadolab.official@gmail.com?subject=RE:ESG 퍼실리테이터 운영 문의">관련 문의하기 →</a>
-      </div>
+
     </div>
 
     <div style="padding:16px 20px; background:var(--s-light); border-radius:10px; border-left:3px solid var(--s); font-size:0.82rem; color:var(--muted); line-height:1.85;">
-      단체 구매(10세트 이상), 기관 협력 제안서, 퍼실리테이터 양성 과정 관련 문의는
+      단체 구매(10세트 이상), 기관 협력 제안서 관련 문의는
       <a href="mailto:amadolab.official@gmail.com" style="color:var(--s);">amadolab.official@gmail.com</a>으로 연락해주세요.
     </div>
   </div>
@@ -898,10 +889,10 @@ footer {
       </div>
       <div class="cta-side">
         <div class="cta-email-wrap">
-          <input class="cta-email-inp" type="email" placeholder="이메일 주소">
+          <input class="cta-email-inp" id="ctaEmailInp" type="email" placeholder="이메일 주소">
           <button class="cta-submit" onclick="submitEmail()">알림 신청</button>
         </div>
-        <div class="cta-note">업데이트·커뮤니티 소식 수신 · 언제든 해지 가능</div>
+        <div class="cta-note">이메일 입력 후 Tally 폼으로 이동 · 개인정보는 펀딩 알림에만 사용</div>
       </div>
     </div>
   </div>
@@ -940,18 +931,37 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.06, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 
-// Email submit
+// Email submit → Tally 팝업 (이메일 자동 입력)
 function submitEmail() {
-  const inp = document.querySelector('.cta-email-inp');
+  const inp = document.getElementById('ctaEmailInp') || document.querySelector('.cta-email-inp');
   const email = inp.value.trim();
   const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!ok) { inp.style.borderColor = 'rgba(192,57,43,0.6)'; inp.focus(); return; }
+  if (!ok) {
+    inp.style.borderColor = 'rgba(192,57,43,0.6)';
+    inp.focus();
+    return;
+  }
   inp.style.borderColor = '';
-  inp.value = '';
-  inp.placeholder = '신청되었습니다 ✓';
+  // Tally 팝업: 이메일 prefill 파라미터 포함
+  const tallyBase = 'https://tally.so/r/obKNvx';
+  const tallyUrl  = tallyBase + '?email=' + encodeURIComponent(email);
+  // Tally 위젯 팝업 시도 → 없으면 새 탭
+  if (window.Tally && typeof window.Tally.openPopup === 'function') {
+    window.Tally.openPopup('obKNvx', {
+      layout: 'modal',
+      width: 480,
+      hiddenFields: { email: email },
+    });
+  } else {
+    window.open(tallyUrl, '_blank', 'noopener,noreferrer');
+  }
+  // 버튼 상태 업데이트
   inp.disabled = true;
-  document.querySelector('.cta-submit').textContent = '완료';
-  document.querySelector('.cta-submit').disabled = true;
+  inp.placeholder = '입력 완료 ✓';
+  inp.value = '';
+  const btn = document.querySelector('.cta-submit');
+  btn.textContent = '폼 열림 ✓';
+  btn.disabled = true;
 }
 </script>
 </body>
